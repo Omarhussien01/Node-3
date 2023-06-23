@@ -73,12 +73,12 @@ app.get('/', async (req,res)=>{
 
   app.post('/',async (req,res)=>{
     
-  const { body } = req;
+  const { body } = req.body;
 
   try {
     const data = registerUserSchema.validateSync(body, { abortEarly: false, stripUnknown: true });
     (async () => {
-      let postResponse =await axios.post("https://api.escuelajs.co/api/v1/products/", newProduct, {
+      let postResponse =await axios.post("https://api.escuelajs.co/api/v1/products/", data, {
       headers: { 'Content-Type': 'application/json' }
       });
       res.setHeader("content-type", "application/json");
@@ -94,7 +94,6 @@ app.get('/', async (req,res)=>{
     return res.status(422).json({ errors: error.errors });
   }
   })
-
   app.listen(8000,()=>{
     console.log("Server is running on port 8000");
   })
